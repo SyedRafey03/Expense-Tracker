@@ -11,7 +11,7 @@ function AuthPage({ onLoginSuccess }) {
         e.preventDefault();
         const endpoint = isLogin ? 'login' : 'signup';
         try {
-            const res = await axios.post(`http://localhost:5000/auth/${endpoint}`, formData);
+            const res = await axios.post(`https://expense-tracker-server-i8it.onrender.com/auth/${endpoint}`, formData);
             if (isLogin) {
                 onLoginSuccess(res.data.user);
             } else {
