@@ -30,7 +30,7 @@ function App() {
   }, [user]);
 
   const fetchTransactions = () => {
-    axios.get(`http://localhost:5000/transactions/${user._id}`)
+    axios.get(`https://expense-tracker-server-i8it.onrender.com/transactions/${user._id}`)
       .then(res => setTransactions(res.data))
       .catch(err => console.error("Error fetching transactions:", err));
   };
@@ -85,7 +85,7 @@ function App() {
   // --- 4. TRANSACTION LOGIC ---
   const addTransaction = (t) => {
     const transactionData = { ...t, userId: user._id };
-    axios.post('http://localhost:5000/transactions/add', transactionData)
+    axios.post('https://expense-tracker-server-i8it.onrender.com/transactions/add', transactionData)
       .then(res => {
         fetchTransactions(); 
         setIsModalOpen(false);
@@ -95,7 +95,7 @@ function App() {
 
   const deleteTransaction = (id) => {
     const targetId = transactions.find(t => t._id === id || t.id === id)?._id || id;
-    axios.delete(`http://localhost:5000/transactions/${targetId}`)
+    axios.delete(`https://expense-tracker-server-i8it.onrender.com/transactions/${targetId}`)
       .then(() => {
         setTransactions(transactions.filter(t => t._id !== targetId));
       })
@@ -105,7 +105,7 @@ function App() {
   const clearAllIncome = () => {
     if (window.confirm("Delete ALL income records from database?")) {
       const incomeIds = transactions.filter(t => t.type === 'income').map(t => t._id);
-      Promise.all(incomeIds.map(id => axios.delete(`http://localhost:5000/transactions/${id}`)))
+      Promise.all(incomeIds.map(id => axios.delete(`https://expense-tracker-server-i8it.onrender.com/transactions/${id}`)))
         .then(() => fetchTransactions());
     }
   };
@@ -113,7 +113,7 @@ function App() {
   const clearAllExpenses = () => {
     if (window.confirm("Delete ALL expense records from database?")) {
       const expenseIds = transactions.filter(t => t.type === 'expense').map(t => t._id);
-      Promise.all(expenseIds.map(id => axios.delete(`http://localhost:5000/transactions/${id}`)))
+      Promise.all(expenseIds.map(id => axios.delete(`https://expense-tracker-server-i8it.onrender.com/transactions/${id}`)))
         .then(() => fetchTransactions());
     }
   };
